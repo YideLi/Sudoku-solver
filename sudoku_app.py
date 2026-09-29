@@ -90,12 +90,12 @@ def explain(step):
 
 st.markdown('''
 <style>
-.block-container {max-width: 1160px; padding-top: 2.5rem;}
+.block-container {max-width: 1160px; padding-top: 1rem;}
 .eyebrow {color: #147d76; font-size: .78rem; font-weight: 700; letter-spacing: .16em;}
-.hero {font-size: 2.65rem; font-weight: 750; line-height: 1.12; color: #15333f; margin: .4rem 0 .6rem;}
+.hero {font-size: 2.65rem; font-weight: 750; line-height: 1.12; color: #15333f; margin: 0 0 0.3rem;}
 .intro {color: #62747c; max-width: 670px; margin-bottom: 1.8rem;}
 .sudoku-board {border-collapse: collapse; table-layout: fixed; width: 100%; max-width: 510px;
- aspect-ratio: 1; border: 2px solid #274d59; background: white; margin: .5rem 0 1rem;}
+ border: 2px solid #274d59; background: white; margin: 0.5rem 0 1rem;}
 .sudoku-board td {text-align: center; vertical-align: middle; padding: 0; width: 11.11%;
  height: 50px; border: 1px solid #d7e2e5; font-size: 1.35rem; font-variant-numeric: tabular-nums;}
 .sudoku-board .given {color: #173c49; background: #f0f5f6; font-weight: 750;}
@@ -133,6 +133,7 @@ if st.session_state.get('active_puzzle') != puzzle_index:
 
 givens = puzzles[puzzle_index]
 left, right = st.columns([1.2, 1], gap='large')
+board_area = left.container()
 with right:
     st.subheader('Solve the whole board')
     algorithm = st.radio('Inference method', ['Forward chaining', 'Backward chaining'], key='algorithm')
@@ -185,7 +186,7 @@ with right:
             st.info('False — the current rules cannot prove this value. This alone does not prove that it is wrong.')
         st.caption(f'Query and proof: {result["elapsed"]:.3f} s')
 
-with left:
+with board_area:
     st.subheader(f'Puzzle {puzzle_index + 1}')
     metrics = st.columns(3)
     metrics[0].metric('Givens', len(givens))
